@@ -1,64 +1,74 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Laravel Framework
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Description:** The Laravel Framework is a powerful PHP framework for web artisans. It provides an elegant syntax, a robust set of tools, and a vibrant developer community.
 
-## About Laravel
+## Installation
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Make sure you have [Composer](https://getcomposer.org/) installed. Then run the following command:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```bash
+composer create-project --prefer-dist laravel/laravel my-laravel-app
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Project Structure
 
-## Learning Laravel
+The project follows the standard Laravel directory structure:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- `app/`: Contains the application's core code.
+- `database/`: Houses database migrations and seeders.
+- `public/`: The web server's document root.
+- `resources/`: Contains views, language files, and assets.
+- `routes/`: Defines the application's routes.
+- `tests/`: Contains automated tests.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Dependencies
 
-## Laravel Sponsors
+- **PHP:** Requires PHP version 8.0 or higher.
+- **laravel/framework:** The core Laravel framework.
+- **laravel/sanctum:** Provides a lightweight authentication system.
+- **laravel/tinker:** Interactive REPL for Laravel.
+- **laravel/ui:** Frontend scaffolding for Bootstrap, Vue, or React.
+- **maatwebsite/excel:** A package for reading and writing Excel files.
+- **spatie/laravel-permission:** Handles user permissions and roles.
+- **guzzlehttp/guzzle:** HTTP client for sending HTTP requests.
+- **fruitcake/laravel-cors:** Adds CORS (Cross-Origin Resource Sharing) support.
+- **realrashid/sweet-alert:** A beautiful replacement for JavaScript's alert.
+- **psr/simple-cache:** PSR-16 simple cache implementation.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Development Dependencies
 
-### Premium Partners
+- **fakerphp/faker:** A library for generating fake data.
+- **laravel/sail:** Docker development environment for Laravel.
+- **nunomaduro/collision:** Better error reporting.
+- **phpunit/phpunit:** Unit testing framework.
+- **spatie/laravel-ignition:** Laravel error page for better debugging.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## Autoloading
+
+The project follows the PSR-4 autoloading standard for classes.
+
+## Scripts
+
+- `post-autoload-dump`: Runs various tasks after the autoloader is dumped.
+- `post-update-cmd`: Publishes assets after updating the project.
+- `post-root-package-install`: Copies the `.env.example` file to `.env` upon package installation.
+- `post-create-project-cmd`: Generates an application key after creating a new project.
+
+## Configuration
+
+- `optimize-autoloader`: Optimizes the autoloader for better performance.
+- `preferred-install`: Installs packages from "dist" by default.
+- `sort-packages`: Sorts packages by name when updating.
+
+## Stability
+
+- **Minimum Stability:** Development.
+- **Prefer Stable:** Enabled.
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests to us.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
