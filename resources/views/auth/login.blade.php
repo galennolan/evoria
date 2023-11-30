@@ -22,7 +22,9 @@
                         <div class="col-lg-20">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb4">Diplomat Evo<br><br>
+                                <img src="asset/img/evo_logo.png" alt="Logo"width="160">
+                                    <!-- <h1 class="h4 text-gray-900 mb4">Diplomat Evo<br> -->
+                                    <br>
                                         <img src="asset/img/pixel-hitam.png" width="160">
                                     </h1>
                                 </div>
@@ -69,6 +71,7 @@
                                             <button type="submit" class="btn btn-primary w-100">
                                                 {{ __('Login') }}
                                             </button>
+                                            <small class="text-muted d-block mt-2">Powered by Pixel</small>
                                         </div>
                                     </div>
                                 </form>
