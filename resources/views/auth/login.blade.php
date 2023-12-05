@@ -22,10 +22,12 @@
                         <div class="col-lg-20">
                             <div class="p-5">
                                 <div class="text-center">
-                                <img src="asset/img/evo_logo.png" alt="Logo"width="160">
-                                    <!-- <h1 class="h4 text-gray-900 mb4">Diplomat Evo<br> -->
+                                <img src="asset/img/diplomat.png" alt="Logo"width="140">
                                     <br>
-                                        <img src="asset/img/pixel-hitam.png" width="160">
+                                <img src="asset/img/evo_logo.png" alt="Logo"width="160">
+                                    <!-- <br> -->
+                                    <br>
+                                        <img src="asset/img/pixel-hitam.png" width="80">
                                     </h1>
                                 </div>
                                 <form method="POST" action="{{ route('login') }}">

@@ -37,9 +37,9 @@ class CustReportController  extends Controller
         ->leftJoin('users', 'users.id', '=', 'customer.id_user')
         ->whereIn('venue', ['C&B', 'KANTOR', 'PA', 'PT', 'PUSAT PEMBELANJAAN', 'SC'])
         ->where(function ($query) {
-            $query->whereIn('rokok', ['Diplomat Mild', 'Diplomat Mild Menthol'])
+            $query->whereIn('rokok', ['Diplomat Evo', 'Diplomat Mild Menthol'])
                   ->orWhereIn('rokok', ['Pro Mild', 'LA Light', 'Class Mild', 'A Mild'])
-                  ->orWhereNotIn('rokok', ['Diplomat Mild', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild']);
+                  ->orWhereNotIn('rokok', ['Diplomat Evo', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild']);
         })
         ->when(Auth::user()->hasRole('adminarea'), function ($query) {
             return $query->where('customer.area', Auth::user()->area);
@@ -47,24 +47,24 @@ class CustReportController  extends Controller
         ->where('customer.created_at', '>=', $last30Days)
         ->select('venue', DB::raw("
             CASE
-                WHEN rokok IN ('Pro Mild', 'LA Light', 'Class Mild', 'A Mild','Diplomat Mild', 'Diplomat Mild Menthol') THEN 
+                WHEN rokok IN ('Pro Mild', 'LA Light', 'Class Mild', 'A Mild','Diplomat Evo', 'Diplomat Mild Menthol') THEN 
                     CASE rokok
                         WHEN 'Pro Mild' THEN 'Pro Mild'
                         WHEN 'LA Light' THEN 'LA Light'
                         WHEN 'Class Mild' THEN 'Class Mild'
                         WHEN 'A Mild' THEN 'A Mild'
-                        WHEN 'Diplomat Mild' THEN 'Diplomat Mild'
+                        WHEN 'Diplomat Evo' THEN 'Diplomat Evo'
                         WHEN 'Diplomat Mild Menthol' THEN 'Diplomat Mild Menthol'
                     END
                 ELSE 'Others'
             END AS rokok"), 
             DB::raw('COUNT(*) AS count'), 
             DB::raw("SUM(CASE
-                WHEN rokok NOT IN ('Diplomat Mild', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild') THEN 1
+                WHEN rokok NOT IN ('Diplomat Evo', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild') THEN 1
                 ELSE 0
             END) AS count_others"),
             DB::raw("COUNT(*) + SUM(CASE
-                WHEN rokok NOT IN ('Diplomat Mild', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild') THEN 1
+                WHEN rokok NOT IN ('Diplomat Evo', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild') THEN 1
                 ELSE 0
             END) AS count_total")
         )
@@ -77,7 +77,7 @@ class CustReportController  extends Controller
                         WHEN 'LA Light' THEN 'LA Light'
                         WHEN 'Class Mild' THEN 'Class Mild'
                         WHEN 'A Mild' THEN 'A Mild'
-                        WHEN 'Diplomat Mild' THEN 'Diplomat Mild'
+                        WHEN 'Diplomat Evo' THEN 'Diplomat Evo'
                         WHEN 'Diplomat Mild Menthol' THEN 'Diplomat Mild Menthol'
                     END
                 ELSE 'Others'
@@ -101,23 +101,23 @@ class CustReportController  extends Controller
         ->whereIn('venue', ['C&B', 'KANTOR', 'PA', 'PT', 'PUSAT PEMBELANJAAN', 'SC'])
         ->where('customer.created_at', '>=', $last30Days)
         ->where(function ($query) {
-            $query->whereIn('rokok', ['Diplomat Mild', 'Diplomat Mild Menthol'])
+            $query->whereIn('rokok', ['Diplomat Evo', 'Diplomat Mild Menthol'])
                   ->orWhereIn('rokok', ['Pro Mild', 'LA Light', 'Class Mild', 'A Mild'])
-                  ->orWhereNotIn('rokok', ['Diplomat Mild', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild']);
+                  ->orWhereNotIn('rokok', ['Diplomat Evo', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild']);
         })
             ->select('venue', DB::raw("
             CASE
                
-                WHEN rokok IN ('Pro Mild', 'LA Light', 'Class Mild', 'A Mild','Diplomat Mild', 'Diplomat Mild Menthol') THEN rokok
+                WHEN rokok IN ('Pro Mild', 'LA Light', 'Class Mild', 'A Mild','Diplomat Evo', 'Diplomat Mild Menthol') THEN rokok
                 ELSE 'Others'
             END AS rokok"), 
             DB::raw('COUNT(*) AS count'), 
             DB::raw("SUM(CASE
-                WHEN rokok NOT IN ('Diplomat Mild', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild') THEN 1
+                WHEN rokok NOT IN ('Diplomat Evo', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild') THEN 1
                 ELSE 0
             END) AS count_others"),
             DB::raw("COUNT(*) + SUM(CASE
-                WHEN rokok NOT IN ('Diplomat Mild', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild') THEN 1
+                WHEN rokok NOT IN ('Diplomat Evo', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild') THEN 1
                 ELSE 0
             END) AS count_total")
         )
@@ -149,10 +149,10 @@ class CustReportController  extends Controller
                           })
         ->get();
 
-        $rokoknya = ['Diplomat Mild', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild'];
+        $rokoknya = ['Diplomat Evo', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild'];
 
         $subquery = DB::query()
-        ->select(DB::raw("CASE WHEN rokok IN ('Diplomat Mild', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild') THEN rokok ELSE 'Others' END AS rokok"))
+        ->select(DB::raw("CASE WHEN rokok IN ('Diplomat Evo', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild') THEN rokok ELSE 'Others' END AS rokok"))
         ->from('customer')
         ->where('created_at', '>=', $last30Days)
         ->fromSub(function ($query) {
@@ -205,9 +205,9 @@ $merklain->push((object)['rokok' => 'Others', 'count_others' => $sumOthers]);
             ->leftJoin('users', 'users.id', '=', 'customer.id_user')
             ->whereIn('venue', ['C&B', 'KANTOR', 'PA', 'PT', 'PUSAT PEMBELANJAAN', 'SC'])
             ->where(function ($query) {
-                $query->whereIn('rokok', ['Diplomat Mild', 'Diplomat Mild Menthol'])
+                $query->whereIn('rokok', ['Diplomat Evo', 'Diplomat Mild Menthol'])
                     ->orWhereIn('rokok', ['Pro Mild', 'LA Light', 'Class Mild', 'A Mild'])
-                    ->orWhereNotIn('rokok', ['Diplomat Mild', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild']);
+                    ->orWhereNotIn('rokok', ['Diplomat Evo', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild']);
             })
             ->when(Auth::user()->hasRole('adminarea'), function ($query) {
                 return $query->leftJoin('users', 'users.id', '=', 'customer.id_user')
@@ -219,37 +219,37 @@ $merklain->push((object)['rokok' => 'Others', 'count_others' => $sumOthers]);
             ->select('venue', DB::raw("
             CASE
                
-                WHEN rokok IN ('Pro Mild', 'LA Light', 'Class Mild', 'A Mild','Diplomat Mild', 'Diplomat Mild Menthol') THEN 
+                WHEN rokok IN ('Pro Mild', 'LA Light', 'Class Mild', 'A Mild','Diplomat Evo', 'Diplomat Mild Menthol') THEN 
                     CASE rokok
                         WHEN 'Pro Mild' THEN 'Pro Mild'
                         WHEN 'LA Light' THEN 'LA Light'
                         WHEN 'Class Mild' THEN 'Class Mild'
                         WHEN 'A Mild' THEN 'A Mild'
-                        WHEN 'Diplomat Mild' THEN 'Diplomat Mild'
+                        WHEN 'Diplomat Evo' THEN 'Diplomat Evo'
                         WHEN 'Diplomat Mild Menthol' THEN 'Diplomat Mild Menthol'
                     END
                 ELSE 'Others'
             END AS rokok"), 
             DB::raw('COUNT(*) AS count'), 
             DB::raw("SUM(CASE
-                WHEN rokok NOT IN ('Diplomat Mild', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild') THEN 1
+                WHEN rokok NOT IN ('Diplomat Evo', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild') THEN 1
                 ELSE 0
             END) AS count_others"),
             DB::raw("COUNT(*) + SUM(CASE
-                WHEN rokok NOT IN ('Diplomat Mild', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild') THEN 1
+                WHEN rokok NOT IN ('Diplomat Evo', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild') THEN 1
                 ELSE 0
             END) AS count_total")
         )
         ->groupBy('venue', DB::raw("
             CASE
                
-                WHEN rokok IN ('Pro Mild', 'LA Light', 'Class Mild', 'A Mild','Diplomat Mild', 'Diplomat Mild Menthol') THEN 
+                WHEN rokok IN ('Pro Mild', 'LA Light', 'Class Mild', 'A Mild','Diplomat Evo', 'Diplomat Mild Menthol') THEN 
                     CASE rokok
                         WHEN 'Pro Mild' THEN 'Pro Mild'
                         WHEN 'LA Light' THEN 'LA Light'
                         WHEN 'Class Mild' THEN 'Class Mild'
                         WHEN 'A Mild' THEN 'A Mild'
-                        WHEN 'Diplomat Mild' THEN 'Diplomat Mild'
+                        WHEN 'Diplomat Evo' THEN 'Diplomat Evo'
                         WHEN 'Diplomat Mild Menthol' THEN 'Diplomat Mild Menthol'
                     END
                 ELSE 'Others'
@@ -272,18 +272,18 @@ $merklain->push((object)['rokok' => 'Others', 'count_others' => $sumOthers]);
             $venue = DB::table('customer')
             ->whereIn('venue', ['C&B', 'KANTOR', 'PA', 'PT', 'PUSAT PEMBELANJAAN', 'SC'])
             ->where(function ($query) {
-                $query->whereIn('rokok', ['Diplomat Mild', 'Diplomat Mild Menthol'])
+                $query->whereIn('rokok', ['Diplomat Evo', 'Diplomat Mild Menthol'])
                       ->orWhereIn('rokok', ['Pro Mild', 'LA Light', 'Class Mild', 'A Mild'])
-                      ->orWhereNotIn('rokok', ['Diplomat Mild', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild']);
+                      ->orWhereNotIn('rokok', ['Diplomat Evo', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild']);
             })
                 ->select('venue', DB::raw("
                 CASE
-                    WHEN rokok IN ('Pro Mild', 'LA Light', 'Class Mild', 'A Mild','Diplomat Mild', 'Diplomat Mild Menthol') THEN rokok
+                    WHEN rokok IN ('Pro Mild', 'LA Light', 'Class Mild', 'A Mild','Diplomat Evo', 'Diplomat Mild Menthol') THEN rokok
                     ELSE 'Others'
                 END AS rokok"), 
                 DB::raw('COUNT(*) AS count'), 
                 DB::raw("SUM(CASE
-                    WHEN rokok NOT IN ('Diplomat Mild', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild') THEN 1
+                    WHEN rokok NOT IN ('Diplomat Evo', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild') THEN 1
                     ELSE 0
                 END) AS count_others"),
                 DB::raw("COUNT(*) + SUM(CASE
@@ -325,7 +325,7 @@ $merklain->push((object)['rokok' => 'Others', 'count_others' => $sumOthers]);
                 ->groupBy('pekerjaan')
                 ->get();
 
-                $rokoknya = ['Diplomat Mild', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild'];
+                $rokoknya = ['Diplomat Evo', 'Diplomat Mild Menthol', 'Pro Mild', 'LA Light', 'Class Mild', 'A Mild'];
 
 
                 $merklain = DB::table('customer')
@@ -339,11 +339,11 @@ $merklain->push((object)['rokok' => 'Others', 'count_others' => $sumOthers]);
                 })
                 ->groupBy(DB::raw("
                     CASE 
-                        WHEN rokok IN ('Pro Mild', 'LA Light', 'Class Mild', 'A Mild', 'Diplomat Mild', 'Diplomat Mild Menthol') THEN rokok 
+                        WHEN rokok IN ('Pro Mild', 'LA Light', 'Class Mild', 'A Mild', 'Diplomat Evo', 'Diplomat Mild Menthol') THEN rokok 
                         ELSE 'Others' 
                     END,
                     CASE 
-                        WHEN rokok IN ('Pro Mild', 'LA Light', 'Class Mild', 'A Mild', 'Diplomat Mild', 'Diplomat Mild Menthol') THEN rokok 
+                        WHEN rokok IN ('Pro Mild', 'LA Light', 'Class Mild', 'A Mild', 'Diplomat Evo', 'Diplomat Mild Menthol') THEN rokok 
                         ELSE 'Others' 
                     END <> 'Others'
                 "))
