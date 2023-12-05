@@ -29,8 +29,9 @@ class DailyReportAllController extends Controller
     public function index()
     {   
         
-        $targetecc = 120;
-        $targetcc = 165;
+        $targetecc = 35;
+        $targetcc = 45;
+        $targetps = 40; 
 
         $zz ="Last 30 Days";
         $last30Days = Carbon::now()->subDays(30)->toDateTimeString();
@@ -81,14 +82,15 @@ class DailyReportAllController extends Controller
 
             // Call the function to generate chart data
     
-        return view ('DailyReportAll.dailyreportall',['zz'=>$zz,'targetecc'=>$targetecc,'targetcc'=>$targetcc,'area'=>$area,'orang' =>$orang,'customer'=>$customer,'user'=>$user,'ccData' => json_encode($ccData),
+        return view ('DailyReportAll.dailyreportall',['zz'=>$zz,'targetecc'=>$targetecc,'targetcc'=>$targetcc,'targetps'=>$targetps,'area'=>$area,'orang' =>$orang,'customer'=>$customer,'user'=>$user,'ccData' => json_encode($ccData),
         'eccData' => json_encode($eccData),'packData' => json_encode($packData),'createdDate'=> json_encode($createdDate)]);
     }
 
     public function loadData(Request $request)
     {
-        $targetecc = 120;
-        $targetcc = 165;
+        $targetecc = 35;
+        $targetcc = 45;
+        $targetps = 40; 
         
         $area = auth()->user()->area;
         $orang = User::whereHas('roles', function ($query) {
@@ -125,7 +127,7 @@ class DailyReportAllController extends Controller
         }
 
         // Return the view with the chart and table data
-        return view('DailyReportAll.dailyreportall', ['zz'=>$zz,'targetecc'=>$targetecc,'targetcc'=>$targetcc,'area'=>$area,'orang' =>$orang,'customer'=>$customer,'user'=>$user,'ccData' => json_encode($ccData),
+        return view('DailyReportAll.dailyreportall', ['zz'=>$zz,'targetecc'=>$targetecc,'targetcc'=>$targetcc,'targetps'=>$targetps,'area'=>$area,'orang' =>$orang,'customer'=>$customer,'user'=>$user,'ccData' => json_encode($ccData),
         'eccData' => json_encode($eccData),'packData' => json_encode($packData),'createdDate'=> json_encode($createdDate)]);
     }
 

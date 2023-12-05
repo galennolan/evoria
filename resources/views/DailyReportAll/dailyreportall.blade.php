@@ -102,7 +102,7 @@
             <th>Area</th>
             <th>CC <small  style="font-size: 10px"> Target {{$targetcc}} </small></th>
             <th>ECC<small  style="font-size: 10px"> Target {{$targetecc}}</small></th></th>
-            <th>Pack Selling<small  style="font-size: 10px"> Target {{$targetcc}}</small></th></th>
+            <th>Pack Selling<small  style="font-size: 10px"> Target {{$targetps}}</small></th></th>
             
         </tr>
         </thead>
@@ -116,7 +116,7 @@
             @if ($cust->CC < $targetcc )
                 <i class="fas fa-arrow-down text-danger"></i>
             @elseif ($cust->CC == $targetcc )
-                    <i class="fas fa-check-up text-success"></i>
+                    <i class="fas fa-check text-success"></i>
              @else
                     <i class="fas fa-arrow-up text-success"></i>
             @endif
@@ -125,7 +125,7 @@
             <td>@if ($cust->ECC < 120)
                 <i class="fas fa-arrow-down text-danger"></i>
             @elseif ($cust->ECC == 120)
-                    <i class="fas fa-check-up text-success"></i>
+                    <i class="fas fa-check text-success"></i>
              @else
                     <i class="fas fa-arrow-up text-success"></i>
             @endif
@@ -133,7 +133,7 @@
             <td>@if ($cust->packsell < 120)
                 <i class="fas fa-arrow-down text-danger"></i>
             @elseif ($cust->packsell == 120)
-                    <i class="fas fa-check-up text-success"></i>
+                    <i class="fas fa-check text-success"></i>
              @else
                     <i class="fas fa-arrow-up text-success"></i>
             @endif
@@ -198,14 +198,24 @@
                                 <td>{{ $cust->created_date}}</td>
                                 <td>{{ $cust->namasales}}</td>
                                 <td>{{$targetecc}}</td>
-                                <td>{{ $cust->ECC}}</td>
-                                <td>{{ round(( $cust->ECC / 120) * 100) }}%</td>
+                                <td>@if ($cust->ECC < $targetecc)
+                                    <i class="fas fa-arrow-down text-danger"></i>
+                                @elseif ($cust->ECC == $targetecc)
+                                        <i class="fas fa-check text-success"></i>
+                                @else
+                                        <i class="fas fa-arrow-up text-success"></i>
+                                @endif
+                                {{ $cust->ECC }}</td>
+                                <td>
+                                    {{ round(( $cust->ECC / $targetecc) * 100) }}%
+
+                                </td>
                                
                                 </tr>
                                 @php
                                     $total += $targetecc;
                                     $total_achievement += $cust->ECC; // Add the current achievement to the total
-                                    $total_percentage += ($cust->ECC / 120) * 100; // Add the current percentage to the total
+                                    $total_percentage += ($cust->ECC / $targetecc) * 100; // Add the current percentage to the total
                                 @endphp
                             @endforeach
                             
@@ -217,7 +227,8 @@
                                 <th>{{$total}}</th>
                 
                                 <th>{{ $total_achievement }}</th>
-                                <th>{{  round($total_percentage)}}%
+                                <th>
+                                    <!-- {{  round($total_percentage)}}% -->
 
                                  </th>
                           
@@ -258,8 +269,17 @@
                                 <td>{{ $cust->created_date}}</td>
                                 <td>{{ $cust->namasales}}</td>
                                 <td>{{$targetcc}}</td>
-                                <td>{{ $cust->CC}}</td>
-                                <td>{{ round(( $cust->CC / 150) * 100) }}%</td>
+                                <td>@if ($cust->CC < $targetcc)
+                                    <i class="fas fa-arrow-down text-danger"></i>
+                                @elseif ($cust->CC == $targetcc)
+                                        <i class="fas fa-check text-success"></i>
+                                @else
+                                        <i class="fas fa-arrow-up text-success"></i>
+                                @endif
+                                {{ $cust->CC }}</td>
+                                <td>
+                                    {{ round(( $cust->CC / $targetcc) * 100) }}%
+                                </td>
                                
                                 </tr>
                                 @php
@@ -274,8 +294,10 @@
                                 <tr>
                                 <td colspan="2"><strong>Total:</strong></td>
                                 <th>{{$totalcc}}</th>
+                                
                                 <th>{{ $total_achievement }}</th>
-                                <th>{{ round($total_percentage) }}%
+                                <th>
+                                    <!-- {{ round($total_percentage) }}% -->
 
                                  </th>
                           
@@ -298,6 +320,7 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th>Day</th>
+                                <th>Nama Sales</th>
                                 <th>Target</th>
                                 <th>Achievement</th>
                                 <th>%</th>
@@ -308,19 +331,20 @@
                             @foreach($customer as $cust)
                             <tr>
                                 <td>{{ $cust->created_date}}</td>
+                                <td>{{ $cust->namasales}}</td>
                                 <td>
-                               {{$targetecc}}
+                               {{$targetps}}
                                 </td>
                               
-                                <td>@if ($cust->packsell < $targetecc)
+                                <td>@if ($cust->packsell < $targetps)
                                     <i class="fas fa-arrow-down text-danger"></i>
-                                @elseif ($cust->packsell == $targetecc)
-                                        <i class="fas fa-check-up text-success"></i>
+                                @elseif ($cust->packsell == $targetps)
+                                        <i class="fas fa-check text-success"></i>
                                 @else
                                         <i class="fas fa-arrow-up text-success"></i>
                                 @endif
                                 {{ $cust->packsell }}</td>
-                                <td>{{ round(( $cust->packsell / $targetecc) * 100) }}%</td>
+                                <td>{{ round(( $cust->packsell / $targetps) * 100) }}%</td>
                               
                                 
                             </tr>
@@ -333,16 +357,18 @@
                                 $total_percentage=0;
                                 $total_target=0;
                                 foreach ($customer as $cust) {
-                                   $total_target += $targetecc;
+                                   $total_target += $targetps;
                                     $total_pack += $cust->packsell;
-                                    $total_percentage += ($cust->packsell / $targetecc) * 100;
+                                    $total_percentage += ($total_pack / $total_target) * 100;
                                 }
                             @endphp
                             <tr>
-                                <td colspan="1"><strong>Total:</strong></td>
+                                <td colspan="2"><strong>Total:</strong></td>
                                 <td><strong>{{ $total_target }}</strong></td>
                                 <td><strong>{{ $total_pack }}</strong></td>
-                                <td><strong>{{ round($total_percentage) }}%</strong></td>
+                                <td><strong>
+                                <!-- {{ round($total_percentage) }}% -->
+                                </strong></td>
                             </tr>
                         </tfoot>
                         </table>

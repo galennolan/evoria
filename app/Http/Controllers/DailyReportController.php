@@ -29,8 +29,10 @@ class DailyReportController  extends Controller
      */
     public function index()
     {   
-        $targetecc = 40;
-        $targetcc = 55;
+        $targetecc = 35;
+        $targetcc = 45;
+        $targetps = 40; 
+
         $zz ="Last 30 Days";
         $last30Days = Carbon::now()->subDays(30)->toDateTimeString();
         $ccData = [];
@@ -64,7 +66,7 @@ class DailyReportController  extends Controller
             $createdDate[] = $data->created_date;
         }
         
-        return view ('sales.dailyreport',['zz'=>$zz,'targetecc'=>$targetecc,'targetcc'=>$targetcc,'customer'=>$customer,'ccData' => json_encode($ccData),
+        return view ('sales.dailyreport',['zz'=>$zz,'targetecc'=>$targetecc,'targetcc'=>$targetcc,'targetps'=>$targetps,'customer'=>$customer,'ccData' => json_encode($ccData),
         'eccData' => json_encode($eccData),'packData' => json_encode($packData),'createdDate'=> json_encode($createdDate)]);
     }
 
@@ -75,9 +77,9 @@ class DailyReportController  extends Controller
             $tanggalakhir = date('Y-m-d 23:59:59', strtotime($request->input('tanggalakhir')));
             // Query the data based on the selected date range
 
-                $targetecc = 40;
-                $targetcc = 55;
-
+            $targetecc = 35;
+            $targetcc = 45;
+            $targetps = 40;
 
             $ccData = [];
             $eccData = [];
@@ -104,7 +106,7 @@ class DailyReportController  extends Controller
                 $createdDate[] = $data->created_date;
             }
             // Pass the data to the view
-            return view('sales.dailyreport', ['zz'=>$zz,'targetecc'=>$targetecc,'targetcc'=>$targetcc,'customer'=>$customer,'ccData' => json_encode($ccData),
+            return view('sales.dailyreport', ['zz'=>$zz,'targetecc'=>$targetecc,'targetcc'=>$targetcc,'targetps'=>$targetps,'customer'=>$customer,'ccData' => json_encode($ccData),
              'eccData' => json_encode($eccData),'packData' => json_encode($packData),'createdDate'=> json_encode($createdDate)]);
         }
 

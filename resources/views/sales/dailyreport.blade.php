@@ -62,7 +62,7 @@
             <th>Tim</th>
             <th>CC <small  style="font-size: 7px"> Target {{$targetcc}} </small></th>
             <th>ECC<small  style="font-size: 7px"> Target {{$targetecc}}</small></th></th>
-            <th>Pack Selling<small  style="font-size: 7px"> Target {{$targetcc}}</small></th></th>
+            <th>Pack Selling<small  style="font-size: 7px"> Target {{$targetps}}</small></th></th>
 
             
         </tr>
@@ -77,7 +77,7 @@
             @if ($cust->CC < $targetcc )
                 <i class="fas fa-arrow-down text-danger"></i>
             @elseif ($cust->CC == $targetcc )
-                    <i class="fas fa-check-up text-success"></i>
+                    <i class="fas fa-check text-success"></i>
              @else
                     <i class="fas fa-arrow-up text-success"></i>
             @endif
@@ -86,15 +86,15 @@
             <td>@if ($cust->ECC < $targetecc)
                 <i class="fas fa-arrow-down text-danger"></i>
             @elseif ($cust->ECC == $targetecc)
-                    <i class="fas fa-check-up text-success"></i>
+                    <i class="fas fa-check text-success"></i>
              @else
                     <i class="fas fa-arrow-up text-success"></i>
             @endif
             {{ $cust->ECC }}</td>
-            <td>@if ($cust->packsell < $targetcc)
+            <td>@if ($cust->packsell < $targetps)
                 <i class="fas fa-arrow-down text-danger"></i>
-            @elseif ($cust->packsell == $targetcc)
-                    <i class="fas fa-check-up text-success"></i>
+            @elseif ($cust->packsell == $targetps)
+                    <i class="fas fa-check text-success"></i>
              @else
                     <i class="fas fa-arrow-up text-success"></i>
             @endif
@@ -259,18 +259,18 @@
                             <tr>
                                 <td>{{ $cust->created_date}}</td>
                                 <td>
-                               {{$targetecc}}
+                               {{$targetps}}
                                 </td>
                               
-                                <td>@if ($cust->packsell < $targetecc)
+                                <td>@if ($cust->packsell < $targetps)
                                     <i class="fas fa-arrow-down text-danger"></i>
-                                @elseif ($cust->packsell == $targetecc)
-                                        <i class="fas fa-check-up text-success"></i>
+                                @elseif ($cust->packsell == $targetps)
+                                        <i class="fas fa-check text-success"></i>
                                 @else
                                         <i class="fas fa-arrow-up text-success"></i>
                                 @endif
                                 {{ $cust->packsell }}</td>
-                                <td>{{ round(( $cust->packsell / $targetecc) * 100) }}%</td>
+                                <td>{{ round(( $cust->packsell / $targetps) * 100) }}%</td>
                               
                                 
                             </tr>
@@ -283,9 +283,9 @@
                                 $total_percentage=0;
                                 $total_target=0;
                                 foreach ($customer as $cust) {
-                                   $total_target += $targetecc;
+                                   $total_target += $targetps;
                                     $total_pack += $cust->packsell;
-                                    $total_percentage += ($cust->packsell / $targetecc) * 100;
+                                    $total_percentage += ($cust->packsell / $targetps) * 100;
                                 }
                             @endphp
                             <tr>
